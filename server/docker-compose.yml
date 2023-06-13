@@ -1,0 +1,23 @@
+version: "3"
+services:
+  # frontend:
+  #   build: ./server
+  #   ports:
+  #     - 3000:3000
+  api:
+    build: ./
+    ports:
+      - 4300:4300
+    environment:
+      - DB_URL=mongodb://db/server
+  db:
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - ./data:/data/db
+
+# volumes:
+#   server:
+
+
