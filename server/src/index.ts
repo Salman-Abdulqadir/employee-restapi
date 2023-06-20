@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 const app = express();
 
 // getting the db url
-const db_url: string = process.env.DB_URL || "";
+const db_url: string = process.env.DB_URL || "mongodb://localhost:27017/employees";
 
 // body parser
 app.use(express.json());
@@ -22,7 +22,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 (async () => {
   try {
     if (db_url === "")
-      throw "The data base link is empty!"
+      throw "The database link is empty!"
     await mongoose.connect(db_url);
     app.listen(4300, () => console.log("using 4300..."));
   } catch (err) {

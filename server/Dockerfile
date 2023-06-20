@@ -11,7 +11,8 @@ COPY package.json yarn.lock ./
 # run commands will run instruction when the image is in the building process
 RUN yarn install
 
-ENV DB_URL="mongodb+srv://salman:XJ0fFNbROVRE610s@cluster0.qijjvid.mongodb.net/employees?retryWrites=true&w=majority"
+# # ENV DB_URL="mongodb+srv://salman:XJ0fFNbROVRE610s@cluster0.qijjvid.mongodb.net/employees?retryWrites=true&w=majority"
+# ENV DB_URL="mongodb://mongo:27017/employees"
 
 
 COPY . .
