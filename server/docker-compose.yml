@@ -1,12 +1,11 @@
 version: "3.8f"
 services:
-
   db:
     image: "mongo"
     ports:
       - 27017:27017
-    volumes:
-      -  data:/data/db
+    logging:
+      driver: none
   api:
     build: ./
     ports:
@@ -15,10 +14,5 @@ services:
       - DB_URL=mongodb://db:27017/employees
     depends_on:
       - db
-
-volumes:
-  data:
-  logs: 
-
 
 

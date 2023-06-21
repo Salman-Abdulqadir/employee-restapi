@@ -5,13 +5,13 @@ import mongoose from "mongoose";
 const app = express();
 
 // getting the db url
-const db_url: string = process.env.DB_URL || "mongodb://localhost:27017/employees";
+const db_url: string = process.env.DB_URL || "";
 
 // body parser
 app.use(express.json());
 
 // adding route
-app.use("/employee", router);
+app.use("/api/v1", router);
 
 // 404
 app.use((req: Request, res: Response, next: NextFunction) => {
