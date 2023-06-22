@@ -1,12 +1,11 @@
 import mongoose from "mongoose";
 
 
-interface IEmployee extends mongoose.Document {
+export interface Employee extends mongoose.Document {
     name: string;
     age: number;
 }
 
-interface EmployeeModel extends mongoose.Model<IEmployee>{}
 
 const EmployeeSchema = new mongoose.Schema({
     name:{
@@ -19,4 +18,4 @@ const EmployeeSchema = new mongoose.Schema({
     }
 });
 
-export const Employee = mongoose.model<IEmployee,EmployeeModel>('Employee', EmployeeSchema);
+export const EmployeeModel = mongoose.model<Employee>('Employee', EmployeeSchema);

@@ -16,7 +16,7 @@ RUN yarn install
 
 COPY . .
 
-EXPOSE 4300
+EXPOSE 3000
 # is what runs when the image is launched after it has been built
 CMD ["yarn", "start"]
 

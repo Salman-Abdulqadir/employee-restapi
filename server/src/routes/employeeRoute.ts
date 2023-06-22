@@ -1,14 +1,35 @@
-import express from "express";
-import {
-  getAllEmployees,
-  addEmployee,
-  deleteEmployee
-} from "../controllers/employeeController";
+import { Router } from "express";
+import { Container} from "inversify";
+import EmployeeController from "../controllers/employeeController";
 
-const router = express.Router();
+export class EmployeeRoutes {
+  private controller: EmployeeController
+  private router: Router
 
-router.get("/employee", getAllEmployees);
-router.post("/employee", addEmployee);
-router.delete("/employee/:id", deleteEmployee)
+  constructor(container: Container){
+    this.controller = container.resolve(EmployeeController)
+    this.router = Router()
+    this.setRouter()
+  }
 
-export default router;
+  private setRouter = () => {
+    this.router.get("/employee/", this.controller.getAllEmployees.bind(this.controller));
+    this.router.post("/employee/", this.controller.addEmployee.bind(this.controller));
+    this.router.delete("/employee/:id", this.controller.deleteEmployee.bind(this.controller));
+  }
+  public getRouter: () => Router = () => this.router
+}
+
+
+export default EmployeeRoutes
+
+
+
+
+
+
+
+
+
+
+

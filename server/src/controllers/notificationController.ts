@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { Employee } from "../model/Employee";
+import { Employee } from "../models/Employee";
 
 export const getAllEmployees = async (
   req: Request,

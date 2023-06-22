@@ -9,10 +9,9 @@ services:
   api:
     build: ./
     ports:
-      - 4300:4300
+      - 3000:3000
     environment:
       - DB_URL=mongodb://db:27017/employees
+      - PORT=3000
     depends_on:
       - db
-
-
