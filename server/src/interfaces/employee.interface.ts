@@ -1,6 +1,6 @@
-import mongoose, { Document } from "mongoose";
+import mongoose from "mongoose";
 
-export interface EmployeeI {
+export interface EmployeeI extends mongoose.Document {
   name: string;
   age: number;
 }
@@ -11,5 +11,3 @@ export interface ServiceI {
   get: () => Promise<object | undefined>;
   delete: (id: string) => void;
 }
-
-export default interface EmployeeSI extends EmployeeI, Document {}

@@ -1,10 +1,12 @@
-import { ServiceI } from "../interfaces/employee.interface";
-import { EmployeeModel } from "../models/Employee";
+import { EmployeeI, ServiceI } from "../interfaces/employee.interface";
 import mongoose from "mongoose";
 
 export default class EmployeeService implements ServiceI {
-  model: mongoose.Model<any, any> = EmployeeModel;
+  model: mongoose.Model<EmployeeI, any>;
 
+  constructor(model: mongoose.Model<EmployeeI, any>) {
+    this.model = model;
+  }
   post = async (data: object) => {
     const resource = await this.model.create(data);
     return resource;

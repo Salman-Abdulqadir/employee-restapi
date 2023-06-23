@@ -1,21 +1,18 @@
 import mongoose from "mongoose";
-
-
-export interface Employee extends mongoose.Document {
-    name: string;
-    age: number;
-}
-
+import { EmployeeI } from "../interfaces/employee.interface";
 
 const EmployeeSchema = new mongoose.Schema({
-    name:{
-        type:String,
-        required: true
-    },
-    age:{
-        type:Number,
-        required: true
-    }
+  name: {
+    type: String,
+    required: true,
+  },
+  age: {
+    type: Number,
+    required: true,
+  },
 });
 
-export const EmployeeModel = mongoose.model<Employee>('Employee', EmployeeSchema);
+export const EmployeeModel = mongoose.model<EmployeeI>(
+  "Employee",
+  EmployeeSchema
+);

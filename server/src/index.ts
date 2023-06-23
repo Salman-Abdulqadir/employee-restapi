@@ -1,11 +1,10 @@
-import "reflect-metadata";
 import express, { Request, Response, NextFunction } from "express";
 
 import routes from "./routes/routes";
 import mongoose from "mongoose";
-import { isAuth } from "./middleware/isAuth.middleware";
-import EmployeeController from "./controllers/employeeController";
+import { EmployeeModel } from "./models/Employee";
 import EmployeeService from "./services/employee.service";
+import { generateToken, isAuth } from "./middleware/isAuth.middleware";
 
 const app = express();
 
@@ -17,7 +16,10 @@ const port = process.env.PORT || 3000;
 // body parser
 app.use(express.json());
 
-app.use("/api/v1", routes(new EmployeeService()));
+app.use(isAuth);
+
+app.use("/api/v1/generate-token", generateToken);
+app.use("/api/v1", routes(new EmployeeService(EmployeeModel)));
 
 // 404
 app.use((req: Request, res: Response, next: NextFunction) => {
