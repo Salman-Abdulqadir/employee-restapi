@@ -1,14 +1,10 @@
-import { injectable, inject } from "inversify";
-import mongoose, { Model } from "mongoose";
 import { ServiceI } from "../interfaces/employee.interface";
+import { EmployeeModel } from "../models/Employee";
+import mongoose from "mongoose";
 
-@injectable()
 export default class EmployeeService implements ServiceI {
-  model: Model<any, any>;
+  model: mongoose.Model<any, any> = EmployeeModel;
 
-  constructor(@inject("EmployeeModel") Employee: Model<any, any>) {
-    this.model = Employee;
-  }
   post = async (data: object) => {
     const resource = await this.model.create(data);
     return resource;

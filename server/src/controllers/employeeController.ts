@@ -1,14 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import EmployeeService from "../services/employee.service";
-import { inject } from "inversify";
-import { controller } from "inversify-express-utils";
-import { Employee } from "../models/Employee";
 
-@controller("/employee")
 export default class EmployeeController {
   private employeeService: EmployeeService;
 
-  constructor(@inject(EmployeeService) employeeService: EmployeeService) {
+  constructor(employeeService: EmployeeService) {
     this.employeeService = employeeService;
   }
 
