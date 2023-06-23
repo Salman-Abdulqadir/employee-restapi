@@ -13,11 +13,12 @@ const app = express();
 const db_url: string =
   process.env.DB_URL ||
   "mongodb+srv://salman:XJ0fFNbROVRE610s@cluster0.qijjvid.mongodb.net/employees?retryWrites=true&w=majority";
-
+const port = process.env.PORT || 3000;
 // body parser
 app.use(express.json());
 
 app.use("/api/v1", routes(new EmployeeService()));
+
 // 404
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.send("<h1>404: Page Not found<h1/>").status(404);
@@ -28,8 +29,8 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     if (db_url === "") throw "The database link is empty!";
     await mongoose.connect(db_url);
 
-    app.listen(process.env.PORT || 3000, () => {
-      console.log(`Server started on port ${process.env.PORT || 3000}`);
+    app.listen(port, () => {
+      console.log(`Server started on port ${port}`);
     });
   } catch (err) {
     console.log(err);
