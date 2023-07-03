@@ -1,4 +1,4 @@
-export const publicKey: string = `-----BEGIN PUBLIC KEY-----
+export const publicKey = `-----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqsqSFy4EyEVESIKAj/Ut
 qb1EYYhcvaE74e/TnEpBzJxvaRdw2f7o818300PagGC3KnZpfxgCkBnKXbHNXbkF
 SvCBTiWTaZFHpNr+inzuiO7dL92NnjkH1raLK1c3oAi1z7wq/08BT0LADvasl8Vl
@@ -8,7 +8,7 @@ wCiWm8TFf8mF95ipA2OeMsLlhqC5JZm89BcOQV7rdSkqmkP7lkPA/A/VfBlB6rM3
 IQIDAQAB
 -----END PUBLIC KEY-----
 `;
-export const privateKey: string = `-----BEGIN RSA PRIVATE KEY-----
+export const privateKey = `-----BEGIN RSA PRIVATE KEY-----
 MIIEpQIBAAKCAQEAqsqSFy4EyEVESIKAj/Utqb1EYYhcvaE74e/TnEpBzJxvaRdw
 2f7o818300PagGC3KnZpfxgCkBnKXbHNXbkFSvCBTiWTaZFHpNr+inzuiO7dL92N
 njkH1raLK1c3oAi1z7wq/08BT0LADvasl8VlryBXwwHMW/HMqfmdSeYxCZiWPRog

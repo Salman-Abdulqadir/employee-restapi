@@ -29,10 +29,11 @@ export default class EmployeeController {
     try {
       const name: string = req.body.name;
       const age: number = parseInt(req.body.age);
+      const notificationPreference: string[] = req.body.notificationPreference;
 
       this.employeeService.post({ name, age });
 
-      res.json("Employee created succesfully!").status(200);
+      next();
     } catch (err) {
       next(err);
     }
