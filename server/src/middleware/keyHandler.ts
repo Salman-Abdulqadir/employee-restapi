@@ -1,10 +1,37 @@
-import * as fs from "fs";
-
-export const publicKey: string = fs.readFileSync(
-  `/Users/s.abdulqadir/Desktop/DockerPractice/server/src/middleware/publicKey.txt`,
-  "utf8"
-);
-export const privateKey: string = fs.readFileSync(
-  "/Users/s.abdulqadir/Desktop/DockerPractice/server/src/middleware/privateKey.txt",
-  "utf8"
-);
+export const publicKey: string = `-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqsqSFy4EyEVESIKAj/Ut
+qb1EYYhcvaE74e/TnEpBzJxvaRdw2f7o818300PagGC3KnZpfxgCkBnKXbHNXbkF
+SvCBTiWTaZFHpNr+inzuiO7dL92NnjkH1raLK1c3oAi1z7wq/08BT0LADvasl8Vl
+ryBXwwHMW/HMqfmdSeYxCZiWPRog9vJJIczh3aol+B+qXlJoNWD1Gu71zijtdZ/h
+qAKzc45yB38Z9SKA2DddEs1mxWCJauejwt0BjnFNsu1j3byu9rhAFpoJI5HqbZAT
+wCiWm8TFf8mF95ipA2OeMsLlhqC5JZm89BcOQV7rdSkqmkP7lkPA/A/VfBlB6rM3
+IQIDAQAB
+-----END PUBLIC KEY-----
+`;
+export const privateKey: string = `-----BEGIN RSA PRIVATE KEY-----
+MIIEpQIBAAKCAQEAqsqSFy4EyEVESIKAj/Utqb1EYYhcvaE74e/TnEpBzJxvaRdw
+2f7o818300PagGC3KnZpfxgCkBnKXbHNXbkFSvCBTiWTaZFHpNr+inzuiO7dL92N
+njkH1raLK1c3oAi1z7wq/08BT0LADvasl8VlryBXwwHMW/HMqfmdSeYxCZiWPRog
+9vJJIczh3aol+B+qXlJoNWD1Gu71zijtdZ/hqAKzc45yB38Z9SKA2DddEs1mxWCJ
+auejwt0BjnFNsu1j3byu9rhAFpoJI5HqbZATwCiWm8TFf8mF95ipA2OeMsLlhqC5
+JZm89BcOQV7rdSkqmkP7lkPA/A/VfBlB6rM3IQIDAQABAoIBAE7GaGOwohwNdtVK
+/ClqGMm1tpiV4NDGUWyAxcXMqlTJwsliOncSEDhQrtsO7PVRpqo7O6WXWXdFrgVR
+QTv9XueVzs5QnpGOpNDxAX626P7XzcWKFwvnmin6wG4ZKFr0KYfLbrmboyr/yr4c
+ILdQIPqJnHEhnzS5boDn1RiEyBF4Qr6ExZubt7whkvtWJDpAZvmuRVrWOCgeSrcL
+ediLHH+NALZ/lc0kMbbHawYYY80jQ8zd/RRDJxqeoLo11f6Os1L0cQSWvCa7LkQy
+857giQCiCinT1znavr9fgQDQSleonVfERgvKm2eYdZA8EXjFHa057X85YF1hwZ25
+893m8ZECgYEA1qgAQTjFiGlBZAyx4C1rzf0qJeboaOsbl/DT5SLg/BQZ0ViQDUSR
+u2sb217YRYJ/2389egammlpYJDlSplw2cLn4OsZcQtzZQED8jwC296tEE5KcWqT6
+nKQLMdgjncazX4sOslRNqf6By9+S1MbUIhluOGZFxJf+l7XxDpNoqoMCgYEAy6+7
+Sp43+Ka3EDhZd1lQj24FAJygSuNhhQwypBWXdNmlvS9ZwRnV+IODH/2GtfRP+aP1
+PlMTt1iMff+pvwxrQU+sKkNU+Hh2hTTS4JNlw2smEmZMsIXmCyaDMqtS4K5L+7tl
+VDkwXtKXJYOOwkFU4IKIOzvbtP212kj0mBbNNosCgYEAsCk/zEbjFYgL+ifQ8sFT
+78EMjf5qTXBlPNSPkUSGj1mPtpaP4dOcJctJGUdFBgaLF3/c3AAJSjNKkq/YfF7A
+7tIwPUv8+4JzaJ/spQ9ZGPic7dMsLdenNFYMOeO/lwQywP5GGWPGOPR9YOsifSyP
+e0yTgAWuzCBQ+ACAzA19oDECgYEAjmD5p7AvadWHs4PgLgg1wvzh7EqP1alZ+rnL
+EF2zcE/Phg36THv10PCFETCUIM51tQhCHt3Ns2TnWBAFpPFWa+H4c9Z7J/B00Kpb
+GfaOtOpKQ6RUyTPf2T2DikCt/zZ3ELEupJARWscUNnneqbUnUoSMG/O8oaiTnNFQ
+gJu3uP8CgYEAsHOIVQa2IwUiX6dLpvt+oJ1lmMiXwcUwbWQgL+KnS9Xl4LTNO2s4
+JkIamIbXx6eKECkiGgNe1tFU9ktJu8JijYfQ725rOCxFZk+LVQDT8qP6NE9ZCQkM
+cOtQwvbeMjs8bEFqoPh6O8Yv/VyarIy6kkuE0cX4DwBiFlk1a7QmhuM=
+-----END RSA PRIVATE KEY-----`;
