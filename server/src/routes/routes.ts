@@ -12,7 +12,9 @@ export default (
 
   const employeeController = new EmployeeController(_employeeService);
 
-  const notificationController = new NotificationController(["email", "fax"]);
+  const notificationController = new NotificationController(
+    _notificationService
+  );
 
   router.route("/employee").get(employeeController.getAllEmployees);
   router.post(

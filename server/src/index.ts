@@ -8,6 +8,7 @@ import EmployeeService from "./services/employee.service";
 import { generateToken, isAuth } from "./middleware/isAuth.middleware";
 import { EmailNotification } from "./services/email.service";
 import { SmsNotification } from "./services/sms.service";
+import { FaxNotification } from "./services/fax.service";
 
 const app = express();
 
@@ -26,7 +27,7 @@ app.use(isAuth);
 
 app.use(
   "/api/v1",
-  routes(new EmployeeService(EmployeeModel), new EmailNotification())
+  routes(new EmployeeService(EmployeeModel), new FaxNotification())
 );
 
 // 404
