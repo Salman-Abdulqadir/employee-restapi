@@ -27,7 +27,7 @@ app.use(isAuth);
 
 app.use(
   "/api/v1",
-  routes(new EmployeeService(EmployeeModel), new FaxNotification())
+  routes(new EmployeeService(EmployeeModel), new SmsNotification())
 );
 
 // 404

@@ -6,6 +6,7 @@ services:
       - 27017:27017
     logging:
       driver: none
+
   api:
     build: ./
     ports:

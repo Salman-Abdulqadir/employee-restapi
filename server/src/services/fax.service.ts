@@ -2,6 +2,6 @@ import { NotificationServiceI } from "../interfaces/notification.interface";
 
 export class FaxNotification implements NotificationServiceI {
   notify() {
-    console.log("fax notification");
+    console.log("fax notification sent");
   }
 }
