@@ -1,8 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import EmployeeService from "../services/employee.service";
+import { notificationHandler } from "./notificationController";
 
 export default class EmployeeController {
   private employeeService: EmployeeService;
+  private notification = notificationHandler;
 
   constructor(employeeService: EmployeeService) {
     this.employeeService = employeeService;
@@ -31,8 +33,8 @@ export default class EmployeeController {
       const age: number = parseInt(req.body.age);
 
       this.employeeService.post({ name, age });
-
-      next();
+      this.notification(req, res, next);
+      res.status(201).json({ message: "Employee added" });
     } catch (err) {
       next(err);
     }

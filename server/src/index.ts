@@ -10,11 +10,6 @@ import { environment } from "./config";
 import { EmployeeModel } from "./models/Employee";
 import EmployeeService from "./services/employee.service";
 
-// notification services
-import { EmailNotification } from "./services/email.service";
-import { SmsNotification } from "./services/sms.service";
-import { FaxNotification } from "./services/fax.service";
-
 // middlewares
 import { generateToken, isAuth } from "./middleware/isAuth.middleware";
 import { errorHandler } from "./middleware/error.middleware";
@@ -37,10 +32,7 @@ app.use("/api/v1/generate-token", generateToken);
 app.use(isAuth);
 
 // employee routes
-app.use(
-  "/api/v1",
-  routes(new EmployeeService(EmployeeModel), new EmailNotification())
-);
+app.use("/api/v1", routes(new EmployeeService(EmployeeModel)));
 
 // 404
 app.use((req: Request, res: Response, next: NextFunction) => {

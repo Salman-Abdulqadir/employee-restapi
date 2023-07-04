@@ -1,27 +1,14 @@
 import { Router } from "express";
 import EmployeeController from "../controllers/employeeController";
 import EmployeeService from "../services/employee.service";
-import { NotificationServiceI } from "../interfaces/notification.interface";
-import { NotificationController } from "../controllers/notificationController";
 
-export default (
-  _employeeService: EmployeeService,
-  _notificationService: NotificationServiceI
-) => {
+export default (_employeeService: EmployeeService) => {
   const router = Router();
 
   const employeeController = new EmployeeController(_employeeService);
 
-  const notificationController = new NotificationController(
-    _notificationService
-  );
-
   router.route("/employee").get(employeeController.getAllEmployees);
-  router.post(
-    "/employee",
-    employeeController.addEmployee,
-    notificationController.notify
-  );
+  router.post("/employee", employeeController.addEmployee);
   router.delete("/employee/:id", employeeController.deleteEmployee);
 
   return router;
