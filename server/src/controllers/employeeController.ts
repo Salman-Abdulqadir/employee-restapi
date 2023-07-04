@@ -1,14 +1,26 @@
 import { NextFunction, Request, Response } from "express";
 import EmployeeService from "../services/employee.service";
-import { notificationHandler } from "./notificationController";
+import { NotificationController } from "./notificationController";
+import { ObserverI, SubjectI } from "../interfaces/employee.interface";
 
-export default class EmployeeController {
+export default class EmployeeController implements SubjectI {
   private employeeService: EmployeeService;
-  private notification = notificationHandler;
+  private subscribers: ObserverI[] = [];
 
   constructor(employeeService: EmployeeService) {
     this.employeeService = employeeService;
   }
+  public attach = (observer: ObserverI) => {
+    if (!this.subscribers.includes(observer)) this.subscribers.push(observer);
+  };
+  public detach = (observer: ObserverI) => {
+    if (this.subscribers.includes(observer))
+      this.subscribers.splice(this.subscribers.indexOf(observer), 1);
+  };
+  public notify = () => {
+    if (this.subscribers.length > 0)
+      this.subscribers.forEach((subscriber) => subscriber.update(this));
+  };
 
   public getAllEmployees = async (
     req: Request,
@@ -33,7 +45,7 @@ export default class EmployeeController {
       const age: number = parseInt(req.body.age);
 
       this.employeeService.post({ name, age });
-      this.notification(req, res, next);
+      this.notify();
       res.status(201).json({ message: "Employee added" });
     } catch (err) {
       next(err);

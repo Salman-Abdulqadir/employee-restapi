@@ -5,17 +5,16 @@ import { NotificationServiceI } from "../interfaces/notification.interface";
 import { EmailNotification } from "../services/email.service";
 import { SmsNotification } from "../services/sms.service";
 import { FaxNotification } from "../services/fax.service";
-import { WhatsAppNotification } from "../services/whatsapp.service";
+import { ObserverI, SubjectI } from "../interfaces/employee.interface";
 
 class NotificationServices {
-  static emailNotification: NotificationServiceI = new EmailNotification();
-  static smsNotification: NotificationServiceI = new SmsNotification();
-  static faxNotification: NotificationServiceI = new FaxNotification();
-  static whatsappNotification: NotificationServiceI =
-    new WhatsAppNotification();
+  public static emailNotification: NotificationServiceI =
+    new EmailNotification();
+  public static smsNotification: NotificationServiceI = new SmsNotification();
+  public static faxNotification: NotificationServiceI = new FaxNotification();
 }
 
-export class NotificationController {
+export class NotificationController implements ObserverI {
   private notficationServices: NotificationServiceI[];
 
   constructor() {
@@ -24,12 +23,7 @@ export class NotificationController {
   public notify = () => {
     this.notficationServices.forEach((service) => service.notify());
   };
+  public update = (subject: SubjectI) => {
+    this.notify();
+  };
 }
-
-export const notificationHandler = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  new NotificationController().notify();
-};

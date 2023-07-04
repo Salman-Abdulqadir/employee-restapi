@@ -11,3 +11,13 @@ export interface ServiceI {
   get: () => Promise<object | undefined>;
   delete: (id: string) => void;
 }
+
+export interface SubjectI {
+  attach: (observer: ObserverI) => void;
+  detach: (observer: ObserverI) => void;
+  notify: () => void;
+}
+
+export interface ObserverI {
+  update: (subject: SubjectI) => void;
+}
