@@ -4,13 +4,17 @@ services:
     image: "mongo"
     ports:
       - 27017:27017
-    logging:
-      driver: none
+    command: mongod --quiet --logpath=/dev/null
 
   api:
-    build: ./
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - ../server:/app
     ports:
       - 3000:3000
+    command: yarn start
     environment:
       - DB_URL=mongodb://db:27017/employees
       - PORT=3000

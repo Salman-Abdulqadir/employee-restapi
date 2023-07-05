@@ -15,9 +15,9 @@ export interface ServiceI {
 export interface SubjectI {
   attach: (observer: ObserverI) => void;
   detach: (observer: ObserverI) => void;
-  notify: () => void;
+  notify: (content: object) => void;
 }
 
 export interface ObserverI {
-  update: (subject: SubjectI) => void;
+  update: (content: object) => void;
 }

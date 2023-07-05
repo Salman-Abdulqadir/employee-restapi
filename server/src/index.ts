@@ -17,9 +17,8 @@ import { errorHandler } from "./middleware/error.middleware";
 const app = express();
 
 // getting the db url and port number environment variables
-const db_url =
-  environment.DB_URL ||
-  "mongodb+srv://salman:XJ0fFNbROVRE610s@cluster0.qijjvid.mongodb.net/employees?retryWrites=true&w=majority";
+// testing changes 2
+const db_url = environment.DB_URL || "";
 const port = environment.PORT || 3000;
 
 // body parser
@@ -50,7 +49,7 @@ const start = async () => {
     console.log(err);
   }
   app.listen(port, () => {
-    console.log(`Server started on port ${port}`);
+    console.log(`Listening on port ${port}`);
   });
 };
 
