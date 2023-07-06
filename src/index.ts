@@ -50,12 +50,12 @@ const start = async () => {
   try {
     if (db_url === "") throw "The database link is empty!";
     await mongoose.connect(db_url);
+    app.listen(port, () => {
+      console.log(`Listening on port ${port}`);
+    });
   } catch (err) {
     console.log(err);
   }
-  app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
-  });
 };
 
 start();
