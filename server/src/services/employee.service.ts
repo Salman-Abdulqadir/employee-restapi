@@ -1,4 +1,8 @@
-import { EmployeeSI, EmployeeServiceI } from "../interfaces/employee.interface";
+import {
+  EmployeeSI,
+  EmployeeServiceI,
+  EmployeeI,
+} from "../interfaces/employee.interface";
 import mongoose from "mongoose";
 
 export default class EmployeeService implements EmployeeServiceI {
@@ -17,5 +21,15 @@ export default class EmployeeService implements EmployeeServiceI {
   };
   delete = (id: string): void => {
     return this.model.findOneAndDelete(new mongoose.Types.ObjectId(id));
+  };
+  update = async (updatedEmployee: EmployeeI) => {
+    try {
+      const id = updatedEmployee.id;
+      const name = updatedEmployee.name;
+      const age = updatedEmployee.age;
+      await this.model.findByIdAndUpdate(id, { name, age });
+    } catch (err) {
+      console.log(err);
+    }
   };
 }

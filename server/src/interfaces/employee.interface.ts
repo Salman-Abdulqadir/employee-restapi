@@ -6,6 +6,7 @@ export interface EmployeeSI extends mongoose.Document {
 }
 
 export interface EmployeeI {
+  id: string;
   name: string;
   age: number;
   notificationPreference: string[];
@@ -16,6 +17,7 @@ export interface EmployeeServiceI {
   post: (data: object) => any;
   get: () => Promise<object | undefined>;
   delete: (id: string) => void;
+  update: (updatedEmployee: EmployeeI) => void;
 }
 
 export interface SubjectI {

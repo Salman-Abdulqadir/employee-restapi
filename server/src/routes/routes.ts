@@ -11,6 +11,7 @@ export default (_employeeService: EmployeeService) => {
 
   router.route("/employee").get(employeeController.getAllEmployees);
   router.post("/employee", employeeController.addEmployee);
+  router.patch("/employee", employeeController.updateEmployee);
   router.delete("/employee/:id", employeeController.deleteEmployee);
 
   return router;

@@ -9,10 +9,32 @@
     {
       "name": "Employee",
       "description": "Employee management"
+    },
+    {
+      "name": "Key",
+      "description": "Key management"
     }
   ],
   "paths": {
-    "api/v1/employee": {
+    "/api/v1/generate-token": {
+      "get": {
+        "summary": "Generate tokens for authenticating requests",
+        "tags": ["Key"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/employee": {
       "get": {
         "summary": "Get all employees",
         "tags": ["Employee"],
@@ -53,9 +75,31 @@
             "description": "Bad Request"
           }
         }
+      },
+      "patch": {
+        "summary": "Updating an Employee",
+        "tags": ["Employee"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmployeeInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Employee Updated"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
       }
     },
-    "api/v1/employee/{id}": {
+    "/api/v1/employee/{id}": {
       "get": {
         "summary": "Get one employee",
         "Tags": ["Employee"],
@@ -111,6 +155,19 @@
             "type": "integer"
           }
         }
+      },
+      "EmployeeInput": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "age": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": ["name", "age"]
       }
     }
   }

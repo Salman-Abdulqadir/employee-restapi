@@ -1,6 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import EmployeeService from "../services/employee.service";
-import { ObserverI, SubjectI } from "../interfaces/employee.interface";
+import {
+  EmployeeI,
+  ObserverI,
+  SubjectI,
+} from "../interfaces/employee.interface";
 
 export default class EmployeeController implements SubjectI {
   private employeeService: EmployeeService;
@@ -20,25 +24,6 @@ export default class EmployeeController implements SubjectI {
     if (this.subscribers.length > 0)
       this.subscribers.forEach((subscriber) => subscriber.update(employee));
   };
-  /**
-   * @swagger
-   * tags:
-   *   name: Employee
-   *   description: Employee management
-   */
-
-  /**
-   * @swagger
-   * /api/v1/employee:
-   *   get:
-   *     summary: Get all employees
-   *     tags: [Employee]
-   *     responses:
-   *       200:
-   *         description: OK
-   *       403:
-   *         description: Forbidden (authentication key is wrong)
-   */
   public getAllEmployees = async (
     req: Request,
     res: Response,
@@ -51,40 +36,6 @@ export default class EmployeeController implements SubjectI {
       next(err);
     }
   };
-  /**
-   * @swagger
-   * /api/v1/employee:
-   *   post:
-   *     summary: Create a new employee
-   *     tags: [Employee]
-   *     requestBody:
-   *       required: true
-   *       content:
-   *         application/json:
-   *           schema:
-   *             $ref: '#/components/schemas/UserInput'
-   *     responses:
-   *       201:
-   *         description: Created
-   *       400:
-   *         description: Bad Request
-   */
-
-  /**
-   * @swagger
-   * components:
-   *   schemas:
-   *     Employee:
-   *       type: object
-   *       properties:
-   *         name:
-   *           type: string
-   *         age:
-   *           type: number
-   *       required:
-   *         - name
-   *         - age
-   */
   public addEmployee = async (
     req: Request,
     res: Response,
@@ -106,25 +57,24 @@ export default class EmployeeController implements SubjectI {
       next(err);
     }
   };
-  /**
-   * @swagger
-   * api/v1/employee/{id}:
-   *   delete:
-   *     summary: Delete an employee
-   *     tags: [Employee]
-   *     parameters:
-   *       - in: path
-   *         name: id
-   *         required: true
-   *         schema:
-   *           type: string
-   *         description: ID of the employee to delete
-   *     responses:
-   *       204:
-   *         description: No Content
-   *       404:
-   *         description: Employee not found
-   */
+  public updateEmployee = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const updatedEmployee = {
+        id: req.body.id,
+        name: req.body.name,
+        age: parseInt(req.body.age),
+        notificationPreference: req.body.notificationPreference,
+      };
+      await this.employeeService.update(updatedEmployee);
+      res.status(200).json(`Employee with id ${updatedEmployee.id} updated`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   public deleteEmployee = async (
     req: Request,
     res: Response,
