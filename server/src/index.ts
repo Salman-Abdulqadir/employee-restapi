@@ -1,8 +1,9 @@
 import express, { Request, Response, NextFunction } from "express";
 import mongoose from "mongoose";
+import * as swaggerDocument from "./swagger.json";
 
-//swagger
-import { configureSwagger } from "./swagger";
+// swagger
+import swaggerUi from "swagger-ui-express";
 
 import routes from "./routes/routes";
 
@@ -19,9 +20,6 @@ import { errorHandler } from "./middleware/error.middleware";
 
 const app = express();
 
-// swagger
-configureSwagger(app);
-
 // getting the db url and port number environment variables
 const db_url = environment.DB_URL || "";
 const port = environment.PORT || 3000;
@@ -32,6 +30,8 @@ app.use(express.json());
 // generate token middleware
 app.use("/api/v1/generate-token", generateToken);
 
+//documentation
+app.use("/api/v1/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // authentication middleware
 // app.use(isAuth);
 
