@@ -1,6 +1,9 @@
 import express, { Request, Response, NextFunction } from "express";
 import mongoose from "mongoose";
 
+//swagger
+import { configureSwagger } from "./swagger";
+
 import routes from "./routes/routes";
 
 // environment variables
@@ -16,6 +19,9 @@ import { errorHandler } from "./middleware/error.middleware";
 
 const app = express();
 
+// swagger
+configureSwagger(app);
+
 // getting the db url and port number environment variables
 const db_url = environment.DB_URL || "";
 const port = environment.PORT || 3000;
@@ -27,7 +33,7 @@ app.use(express.json());
 app.use("/api/v1/generate-token", generateToken);
 
 // authentication middleware
-app.use(isAuth);
+// app.use(isAuth);
 
 // employee routes
 app.use("/api/v1", routes(new EmployeeService(EmployeeModel)));
