@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import EmployeeService from "../services/employee.service";
 import { NotificationHandler } from "../notification/notificationHandler";
 import {
-  EmployeeI,
+  EmployeeSI,
   ObserverI,
   SubjectI,
 } from "../interfaces/employee.interface";

@@ -1,4 +1,4 @@
-import { NotificationServiceI } from "../interfaces/notification.interface";
+import { NotificationServiceI } from "../../interfaces/notification.interface";
 
 export class SmsNotification implements NotificationServiceI {
   public notify = () => {

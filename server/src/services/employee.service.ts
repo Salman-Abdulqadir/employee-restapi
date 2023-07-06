@@ -1,10 +1,10 @@
-import { EmployeeI, ServiceI } from "../interfaces/employee.interface";
+import { EmployeeSI, EmployeeServiceI } from "../interfaces/employee.interface";
 import mongoose from "mongoose";
 
-export default class EmployeeService implements ServiceI {
-  model: mongoose.Model<EmployeeI, any>;
+export default class EmployeeService implements EmployeeServiceI {
+  model: mongoose.Model<EmployeeSI, any>;
 
-  constructor(model: mongoose.Model<EmployeeI, any>) {
+  constructor(model: mongoose.Model<EmployeeSI, any>) {
     this.model = model;
   }
   post = async (data: object) => {

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { EmployeeI } from "../interfaces/employee.interface";
+import { EmployeeSI } from "../interfaces/employee.interface";
 
 const EmployeeSchema = new mongoose.Schema({
   name: {
@@ -12,7 +12,7 @@ const EmployeeSchema = new mongoose.Schema({
   },
 });
 
-export const EmployeeModel = mongoose.model<EmployeeI>(
+export const EmployeeModel = mongoose.model<EmployeeSI>(
   "Employee",
   EmployeeSchema
 );

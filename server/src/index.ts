@@ -17,7 +17,6 @@ import { errorHandler } from "./middleware/error.middleware";
 const app = express();
 
 // getting the db url and port number environment variables
-// testing changes 2
 const db_url = environment.DB_URL || "";
 const port = environment.PORT || 3000;
 
