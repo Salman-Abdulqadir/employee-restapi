@@ -10,6 +10,12 @@ const EmployeeSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  notificationPreference: [
+    {
+      type: String,
+      required: true,
+    },
+  ],
 });
 
 export const EmployeeModel = mongoose.model<EmployeeSI>(

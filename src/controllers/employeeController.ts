@@ -43,16 +43,13 @@ export default class EmployeeController implements SubjectI {
 
       if (!validation.status)
         return res.status(400).json({ message: validation.message });
-
-      const name: string = req.body.name;
-      const age: number = parseInt(req.body.age);
       const employee = {
         name: req.body.name,
         age: parseInt(req.body.age),
         notificationPreference: req.body.notificationPreference,
       };
 
-      this.employeeService.post({ name, age });
+      this.employeeService.post(employee);
 
       // notifying all the observers that an employee is created
       this.notify(employee);
