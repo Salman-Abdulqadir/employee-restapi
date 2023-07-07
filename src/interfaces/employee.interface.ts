@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 export interface EmployeeSI extends mongoose.Document {
   name: string;
   age: number;
+  notificationPreference: string[];
 }
 
 export interface EmployeeI {

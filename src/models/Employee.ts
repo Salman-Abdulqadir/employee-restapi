@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { EmployeeSI } from "../interfaces/employee.interface";
 
 const EmployeeSchema = new mongoose.Schema({
@@ -10,6 +10,18 @@ const EmployeeSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  notificationPreference: [
+    {
+      type: String,
+      required: true,
+    },
+  ],
+  tasks: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Task",
+    },
+  ],
 });
 
 export const EmployeeModel = mongoose.model<EmployeeSI>(
