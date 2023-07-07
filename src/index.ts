@@ -32,8 +32,9 @@ app.use("/api/v1/generate-token", generateToken);
 
 //documentation
 app.use("/api/v1/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 // authentication middleware
-// app.use(isAuth);
+app.use(isAuth);
 
 // employee routes
 app.use("/api/v1", routes(new EmployeeService(EmployeeModel)));
@@ -48,7 +49,7 @@ app.use(errorHandler);
 
 const start = async () => {
   try {
-    if (db_url === "") throw "The database link is empty!";
+    if (db_url === "") throw new Error("The database link is empty!");
     await mongoose.connect(db_url);
     app.listen(port, () => {
       console.log(`Listening on port ${port}`);
