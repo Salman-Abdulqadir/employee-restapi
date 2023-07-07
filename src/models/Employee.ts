@@ -10,18 +10,6 @@ const EmployeeSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  notificationPreference: [
-    {
-      type: String,
-      required: true,
-    },
-  ],
-  tasks: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Task",
-    },
-  ],
 });
 
 export const EmployeeModel = mongoose.model<EmployeeSI>(
