@@ -7,9 +7,7 @@ export class NotificationHandler implements ObserverI {
       preference = preference.toUpperCase();
       try {
         const service = NotificationFactory.getService(preference);
-        if (!service)
-          throw new Error(`${preference} service is not registered`);
-        service.notify();
+        service?.notify();
       } catch (err) {
         console.log(err);
       }

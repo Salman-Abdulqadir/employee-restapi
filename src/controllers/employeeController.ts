@@ -1,10 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import EmployeeService from "../services/employee.service";
-import {
-  EmployeeI,
-  ObserverI,
-  SubjectI,
-} from "../interfaces/employee.interface";
+import { ObserverI, SubjectI } from "../interfaces/employee.interface";
+import { ValidateEmployee } from "../middleware/validateEmployeeInfo";
 
 export default class EmployeeController implements SubjectI {
   private employeeService: EmployeeService;
@@ -42,17 +39,25 @@ export default class EmployeeController implements SubjectI {
     next: NextFunction
   ) => {
     try {
+      const validation = ValidateEmployee(req);
+
+      if (!validation.status)
+        return res.status(400).json({ message: validation.message });
+
       const name: string = req.body.name;
       const age: number = parseInt(req.body.age);
       const employee = {
-        name,
-        age,
+        name: req.body.name,
+        age: parseInt(req.body.age),
         notificationPreference: req.body.notificationPreference,
       };
 
       this.employeeService.post({ name, age });
+
+      // notifying all the observers that an employee is created
       this.notify(employee);
-      res.status(201).json({ message: "Employee added" });
+
+      res.status(201).json({ message: "Employee Added" });
     } catch (err) {
       next(err);
     }

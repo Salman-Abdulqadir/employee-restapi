@@ -5,16 +5,16 @@ import { EmailNotification } from "../services/notification/email.service";
 import { SmsNotification } from "../services/notification/sms.service";
 import { FaxNotification } from "../services/notification/fax.service";
 
-class NotificationEnum {
-  public static emailNotification = new NotificationEnum(
+export class RegisteredNotification {
+  public static emailNotification = new RegisteredNotification(
     "EMAIL",
     new EmailNotification()
   );
-  public static faxNotification = new NotificationEnum(
+  public static faxNotification = new RegisteredNotification(
     "FAX",
     new FaxNotification()
   );
-  public static smsNotification = new NotificationEnum(
+  public static smsNotification = new RegisteredNotification(
     "SMS",
     new SmsNotification()
   );
@@ -26,12 +26,35 @@ class NotificationEnum {
     this.name = name;
     this.service = service;
   }
+
+  static get = (serviceName: string): NotificationServiceI | undefined => {
+    let notification = Object.values(RegisteredNotification).find(
+      (service) => service.name === serviceName
+    );
+    if (!notification) return;
+    return notification.service;
+  };
+  static includes = (
+    serviceNames: string[]
+  ): { status: boolean; unavailableServices: string[] } => {
+    let unavailableServices: string[] = [];
+
+    for (let service of serviceNames) {
+      if (!RegisteredNotification.get(service.toUpperCase()))
+        unavailableServices.push(service);
+    }
+
+    if (unavailableServices.length > 0)
+      return { status: false, unavailableServices };
+    return { status: true, unavailableServices: [] };
+  };
 }
 
-// const NotificationEnum: { [keys: string]: NotificationServiceI } = {
-//   EMAIL: new EmailNotification(),
-//   FAX: new FaxNotification(),
-//   SMS: new SmsNotification(),
+// const NotificationEnum: { [keys: string]: any } = {
+//   EMAIL: EmailNotification,
+//   FAX: FaxNotification,
+//   SMS: SmsNotification,
+//   WHATSAPP: WhatsAppNotification,
 // };
 
 export class NotificationFactory {
@@ -39,14 +62,10 @@ export class NotificationFactory {
     serviceName: string
   ): NotificationServiceI | undefined => {
     try {
-      const targetService = Object.values(NotificationEnum).find(
-        (service) => service.name === serviceName
-      );
-      if (!targetService) return;
-      return targetService.service;
+      const targetService = RegisteredNotification.get(serviceName);
+      return targetService;
     } catch (err) {
       console.log(err);
     }
-    // return NotificationEnum[serviceName];
   };
 }
