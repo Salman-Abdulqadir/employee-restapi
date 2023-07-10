@@ -27,9 +27,9 @@ export interface EmployeeServiceI {
 export interface SubjectI {
   attach: (observer: ObserverI) => void;
   detach: (observer: ObserverI) => void;
-  notify: (content: EmployeeI) => void;
+  notify: (content: EmployeeI | EmployeeI[]) => void;
 }
 
 export interface ObserverI {
-  update: (content: EmployeeI) => void;
+  update: (content: EmployeeI | EmployeeI[]) => void;
 }

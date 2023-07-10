@@ -13,8 +13,17 @@ export class NotificationHandler implements ObserverI {
       }
     });
   };
-  public update = (employee: EmployeeI) => {
-    const { notificationPreference } = employee;
-    if (notificationPreference.length > 0) this.notify(notificationPreference);
+  public update = (employees: EmployeeI | EmployeeI[]) => {
+    if (employees instanceof Array)
+      employees.forEach((employee) => {
+        const { notificationPreference } = employee;
+        if (notificationPreference.length > 0)
+          this.notify(notificationPreference);
+      });
+    else {
+      const { notificationPreference } = employees;
+      if (notificationPreference.length > 0)
+        this.notify(notificationPreference);
+    }
   };
 }

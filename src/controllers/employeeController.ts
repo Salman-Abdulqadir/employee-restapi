@@ -107,10 +107,7 @@ export default class EmployeeController implements SubjectI {
       // taking the first file from the form-data files
       const file = (req.files as Express.Multer.File[])[0];
 
-      if (!file)
-        return res
-          .status(400)
-          .json({ message: "Error uk'lk'lkploading and processing the file" });
+      if (!file) throw new Error();
 
       // checking if the csv file valid and get the employees from it
       const employees = await processCSV(file.buffer);
@@ -119,9 +116,11 @@ export default class EmployeeController implements SubjectI {
       if (!employees.status)
         return res.status(400).json({ message: employees.content });
 
-      console.log("ok5");
       // if the employees are successfully processed, they will be inserted
       this.employeeService.bulkInsert(employees.content);
+
+      // notify the employees via their
+      this.notify(employees);
 
       res.status(201).json(employees);
     } catch (error) {

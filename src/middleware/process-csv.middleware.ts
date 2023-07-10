@@ -1,4 +1,5 @@
 import * as csv from "@fast-csv/parse";
+import { ValidateEmployee } from "./validateEmployeeInfo";
 
 interface Employee {
   name: string;
@@ -8,7 +9,7 @@ interface Employee {
 }
 
 export const processCSV = async (
-  fileBuffer: any
+  fileBuffer: Buffer
 ): Promise<{ status: boolean; content: any }> => {
   const expectedHeaders = ["name", "age", "notificationPreference", "salary"];
 
@@ -32,7 +33,7 @@ export const processCSV = async (
       })
       .on("data", (data) => {
         rowCounter++;
-        const employee = ValidateEmployee(data, rowCounter);
+        const employee = checkEmployee(data, rowCounter);
         if (!employee.isValid)
           resolve({ status: false, content: employee.content });
         results.push(employee.content);
@@ -42,7 +43,7 @@ export const processCSV = async (
   });
 };
 
-const ValidateEmployee = (
+const checkEmployee = (
   data: any,
   rowCounter: number
 ): { isValid: boolean; content: Employee | string } => {
@@ -83,5 +84,13 @@ const ValidateEmployee = (
     salary: parseFloat(data.salary),
     notificationPreference: data.notificationPreference.toString().split(","),
   };
+
+  const validatedEmployee = ValidateEmployee(employee);
+  if (!validatedEmployee.status)
+    return {
+      isValid: false,
+      content: `${validatedEmployee.message}: Row ${rowCounter}`,
+    };
+
   return { isValid: true, content: employee };
 };
