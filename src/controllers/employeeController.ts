@@ -104,13 +104,15 @@ export default class EmployeeController implements SubjectI {
     next: NextFunction
   ) => {
     try {
-      // taking the first file from the form-data files
-      const file = (req.files as Express.Multer.File[])[0];
+      let file: File | undefined;
 
-      if (!file)
-        return res
-          .status(400)
-          .json({ message: "Error uploading and processing the file" });
+      // taking the first file from the form-data files
+      for (let key in req.files) {
+        if (req.files.hasOwnProperty(key)) file = req.files[key];
+        break;
+      }
+
+      if (!file) return res.status(400).json({ message: "No file found" });
 
       // checking if the csv file valid and get the employees from it
       const employees = await processCSV(file.path);
