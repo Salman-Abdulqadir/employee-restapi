@@ -104,6 +104,7 @@ export default class EmployeeController implements SubjectI {
     next: NextFunction
   ) => {
     try {
+      console.log("1");
       // taking the first file from the form-data files
       const file = (req.files as Express.Multer.File[])[0];
 
@@ -120,8 +121,7 @@ export default class EmployeeController implements SubjectI {
       this.employeeService.bulkInsert(employees.content);
 
       // notify the employees via their
-      this.notify(employees);
-
+      this.notify(employees.content);
       res.status(201).json(employees);
     } catch (error) {
       res
