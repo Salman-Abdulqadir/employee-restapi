@@ -1,5 +1,4 @@
 import * as csv from "@fast-csv/parse";
-import fs from "fs";
 
 interface Employee {
   name: string;
@@ -9,18 +8,18 @@ interface Employee {
 }
 
 export const processCSV = async (
-  filePath: string
+  fileBuffer: any
 ): Promise<{ status: boolean; content: any }> => {
   const expectedHeaders = ["name", "age", "notificationPreference", "salary"];
+
   // a counter to know in which row and column is the error occuring
   let rowCounter = 0;
 
   return new Promise((resolve, reject) => {
     const results: any[] = [];
 
-    const stream = fs.createReadStream(filePath);
     csv
-      .parseStream(stream, { headers: true })
+      .parseString(fileBuffer.toString(), { headers: true })
       .on("headers", (headers) => {
         const missingHeaders = expectedHeaders.filter(
           (header) => !headers.includes(header)

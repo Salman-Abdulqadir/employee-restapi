@@ -110,15 +110,16 @@ export default class EmployeeController implements SubjectI {
       if (!file)
         return res
           .status(400)
-          .json({ message: "Error uploading and processing the file" });
+          .json({ message: "Error uk'lk'lkploading and processing the file" });
 
       // checking if the csv file valid and get the employees from it
-      const employees = await processCSV(file.path);
+      const employees = await processCSV(file.buffer);
 
       // if the status is false, some fields are not correct
       if (!employees.status)
         return res.status(400).json({ message: employees.content });
 
+      console.log("ok5");
       // if the employees are successfully processed, they will be inserted
       this.employeeService.bulkInsert(employees.content);
 

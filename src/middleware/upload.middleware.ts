@@ -1,23 +1,7 @@
 import multer, { FileFilterCallback } from "multer";
-import fs from "fs";
-
-// Specify the destination folder
-const uploadFolder = "./src/uploads/";
-
-// Create the destination folder if it doesn't exist
-if (!fs.existsSync(uploadFolder)) {
-  fs.mkdirSync(uploadFolder);
-}
 
 // Configure the destination folder and filename
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, uploadFolder);
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
-});
+const storage = multer.memoryStorage();
 
 // Define the file filter to accept only CSV files
 const fileFilter = (
