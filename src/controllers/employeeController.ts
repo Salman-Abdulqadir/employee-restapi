@@ -6,6 +6,7 @@ import {
   SubjectI,
 } from "../interfaces/employee.interface";
 import { ValidateEmployee } from "../middleware/validateEmployeeInfo";
+import { processCSV } from "../middleware/process-csv.middleware";
 
 export default class EmployeeController implements SubjectI {
   private employeeService: EmployeeService;
@@ -95,6 +96,37 @@ export default class EmployeeController implements SubjectI {
       res.json(`Employee with Id ${employee_id} is deleted!`).status(201);
     } catch (err) {
       next(err);
+    }
+  };
+  public bulkUpload = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      // taking the first file from the form-data files
+      const file = (req.files as Express.Multer.File[])[0];
+
+      if (!file)
+        return res
+          .status(400)
+          .json({ message: "Error uploading and processing the file" });
+
+      // checking if the csv file valid and get the employees from it
+      const employees = await processCSV(file.path);
+
+      // if the status is false, some fields are not correct
+      if (!employees.status)
+        return res.status(400).json({ message: employees.content });
+
+      // if the employees are successfully processed, they will be inserted
+      this.employeeService.bulkInsert(employees.content);
+
+      res.status(201).json(employees);
+    } catch (error) {
+      res
+        .status(400)
+        .json({ message: "Error uploading and processing the file" });
     }
   };
 }

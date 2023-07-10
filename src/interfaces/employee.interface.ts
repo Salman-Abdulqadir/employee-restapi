@@ -21,6 +21,7 @@ export interface EmployeeServiceI {
   get: () => Promise<object | undefined>;
   delete: (id: string) => void;
   update: (updatedEmployee: EmployeeI) => void;
+  bulkInsert: (employees: EmployeeI[]) => void;
 }
 
 export interface SubjectI {

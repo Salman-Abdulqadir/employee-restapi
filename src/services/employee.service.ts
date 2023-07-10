@@ -32,4 +32,7 @@ export default class EmployeeService implements EmployeeServiceI {
       console.log(err);
     }
   };
+  bulkInsert = (employees: EmployeeI[]) => {
+    this.model.insertMany(employees);
+  };
 }
