@@ -1,21 +1,19 @@
-import { Request, Response, NextFunction } from "express";
 import { RegisteredNotification } from "../notification/notificationFactory";
+import { EmployeeI } from "../interfaces/employee.interface";
 
 export const ValidateEmployee = (
-  req: Request
+  employee: any
 ): { status: boolean; message: string } => {
-  const employee = {
-    name: req.body.name,
-    age: parseInt(req.body.age),
-    notificationPreference: req.body.notificationPreference,
-  };
-
   // checking if the name is valid
   if (employee.name.length < 1)
     return { status: false, message: `Employee name is not valid` };
 
   // checking if the age is valid
   if (employee.age < 1)
+    return { status: false, message: `Employee age is not valid` };
+
+  // checking if the age is valid
+  if (employee.salary < 1)
     return { status: false, message: `Employee age is not valid` };
 
   // checking if the notification preferences are available

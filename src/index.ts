@@ -34,7 +34,7 @@ app.use("/api/v1/generate-token", generateToken);
 app.use("/api/v1/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // authentication middleware
-app.use(isAuth);
+// app.use(isAuth);
 
 // employee routes
 app.use("/api/v1", routes(new EmployeeService(EmployeeModel)));

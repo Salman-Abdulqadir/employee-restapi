@@ -1,6 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import EmployeeService from "../services/employee.service";
-import { ObserverI, SubjectI } from "../interfaces/employee.interface";
+import {
+  EmployeeI,
+  ObserverI,
+  SubjectI,
+} from "../interfaces/employee.interface";
 import { ValidateEmployee } from "../middleware/validateEmployeeInfo";
 
 export default class EmployeeController implements SubjectI {
@@ -39,15 +43,17 @@ export default class EmployeeController implements SubjectI {
     next: NextFunction
   ) => {
     try {
-      const validation = ValidateEmployee(req);
-
-      if (!validation.status)
-        return res.status(400).json({ message: validation.message });
       const employee = {
         name: req.body.name,
         age: parseInt(req.body.age),
+        salary: parseFloat(req.body.salary),
         notificationPreference: req.body.notificationPreference,
       };
+
+      const validation = ValidateEmployee(employee);
+
+      if (!validation.status)
+        return res.status(400).json({ message: validation.message });
 
       this.employeeService.post(employee);
 
@@ -69,6 +75,7 @@ export default class EmployeeController implements SubjectI {
         id: req.body.id,
         name: req.body.name,
         age: parseInt(req.body.age),
+        salary: parseFloat(req.body.salary),
         notificationPreference: req.body.notificationPreference,
       };
       await this.employeeService.update(updatedEmployee);

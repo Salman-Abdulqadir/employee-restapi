@@ -16,6 +16,10 @@ const EmployeeSchema = new mongoose.Schema({
       required: true,
     },
   ],
+  salary: {
+    type: Number,
+    required: true,
+  },
 });
 
 export const EmployeeModel = mongoose.model<EmployeeSI>(

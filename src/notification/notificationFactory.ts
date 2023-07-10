@@ -4,6 +4,7 @@ import { NotificationServiceI } from "../interfaces/notification.interface";
 import { EmailNotification } from "../services/notification/email.service";
 import { SmsNotification } from "../services/notification/sms.service";
 import { FaxNotification } from "../services/notification/fax.service";
+import { WhatsAppNotification } from "../services/notification/whatsapp.service";
 
 export class RegisteredNotification {
   public static emailNotification = new RegisteredNotification(
@@ -17,6 +18,10 @@ export class RegisteredNotification {
   public static smsNotification = new RegisteredNotification(
     "SMS",
     new SmsNotification()
+  );
+  public static whatNotification = new RegisteredNotification(
+    "WHATSAPP",
+    new WhatsAppNotification()
   );
 
   readonly name;
@@ -50,19 +55,12 @@ export class RegisteredNotification {
   };
 }
 
-// const NotificationEnum: { [keys: string]: any } = {
-//   EMAIL: EmailNotification,
-//   FAX: FaxNotification,
-//   SMS: SmsNotification,
-//   WHATSAPP: WhatsAppNotification,
-// };
-
 export class NotificationFactory {
   static getService = (
-    serviceName: string
+    preference: string
   ): NotificationServiceI | undefined => {
     try {
-      const targetService = RegisteredNotification.get(serviceName);
+      const targetService = RegisteredNotification.get(preference);
       return targetService;
     } catch (err) {
       console.log(err);
