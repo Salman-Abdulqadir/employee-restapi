@@ -11,9 +11,10 @@ interface Employee {
 export const processCSV = async (
   fileBuffer: Buffer
 ): Promise<{ status: boolean; content: any }> => {
-  const expectedHeaders = ["name", "age", "notificationPreference", "salary"];
+  // getting the expected keys from the employee interface which has all the required field names
+  const expectedHeaders = Object.values({} as Employee);
 
-  // a counter to know in which row and column is the error occuring
+  // a counter to know in which row is the error occuring
   let rowCounter = 0;
 
   return new Promise((resolve, reject) => {

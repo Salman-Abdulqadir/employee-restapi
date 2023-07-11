@@ -12,9 +12,9 @@ export const ValidateEmployee = (
   if (employee.age < 1)
     return { status: false, message: `Employee age is not valid` };
 
-  // checking if the age is valid
+  // checking if the salary is valid
   if (employee.salary < 1)
-    return { status: false, message: `Employee age is not valid` };
+    return { status: false, message: `Employee salary is not valid` };
 
   // checking if the notification preferences are available
   let checkingServices = RegisteredNotification.includes(

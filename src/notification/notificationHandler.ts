@@ -14,7 +14,6 @@ export class NotificationHandler implements ObserverI {
     });
   };
   public update = (employees: EmployeeI | EmployeeI[]) => {
-    console.log(employees);
     try {
       if (employees instanceof Array) {
         employees.forEach((employee) => {

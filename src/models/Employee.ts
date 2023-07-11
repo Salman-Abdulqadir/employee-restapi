@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, mongo } from "mongoose";
 import { EmployeeSI } from "../interfaces/employee.interface";
 
 const EmployeeSchema = new mongoose.Schema({
@@ -17,7 +17,7 @@ const EmployeeSchema = new mongoose.Schema({
     },
   ],
   salary: {
-    type: Number,
+    type: mongoose.Schema.Types.Decimal128,
     required: true,
   },
 });
