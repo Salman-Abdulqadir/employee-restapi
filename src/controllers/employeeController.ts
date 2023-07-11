@@ -143,12 +143,14 @@ export default class EmployeeController implements SubjectI {
         return res.status(400).json({ message: employees.content });
 
       // if the employees are successfully processed, they will be inserted
-      this.employeeService.bulkInsert(employees.content);
+      const filteredEmployees = await this.employeeService.bulkInsert(
+        employees.content
+      );
 
       // notify the observers that employees were created
-      this.notify(employees.content);
+      this.notify(filteredEmployees);
 
-      res.status(201).json(employees);
+      res.status(201).json(filteredEmployees);
     } catch (error) {
       res
         .status(400)

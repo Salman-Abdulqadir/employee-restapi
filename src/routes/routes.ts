@@ -18,12 +18,12 @@ export default (
 
   router.route("/employee").get(employeeController.getAllEmployees);
   router.get("/employee/:id", employeeController.getOneEmployee);
-  router.post("/employee", employeeController.addEmployee);
   router.post(
     "/employee/bulk-upload",
     uploadMiddleware,
     employeeController.bulkUpload
   );
+  router.post("/employee", employeeController.addEmployee);
   router.patch("/employee", employeeController.updateEmployee);
   router.delete("/employee/:id", employeeController.deleteEmployee);
 

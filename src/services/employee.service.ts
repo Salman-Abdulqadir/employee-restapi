@@ -35,7 +35,21 @@ export default class EmployeeService implements EmployeeServiceI {
       console.log(err);
     }
   };
-  bulkInsert = (employees: EmployeeI[]) => {
-    this.model.insertMany(employees);
+  bulkInsert = async (employees: EmployeeI[]) => {
+    let filteredEmployees = await Promise.all(
+      employees.map(async (employee) => {
+        let status = await this.model.find(employee);
+
+        if (status.length === 0) {
+          return employee;
+        }
+      })
+    );
+    filteredEmployees = filteredEmployees.filter(
+      (employee) => employee !== undefined
+    );
+    console.log(filteredEmployees);
+    this.model.insertMany(filteredEmployees);
+    return filteredEmployees;
   };
 }

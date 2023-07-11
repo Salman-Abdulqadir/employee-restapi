@@ -21,7 +21,6 @@ export class EmployeeCache implements EmployeeCacheI {
   ): Promise<EmployeeI | undefined> => {
     const employee = await EmployeeCache.client.get(employeeId);
     if (!employee) return;
-    console.log("from redis");
     return JSON.parse(employee);
   };
 
