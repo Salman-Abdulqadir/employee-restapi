@@ -1,0 +1,153 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Employee API",
+    "version": "1.0.0",
+    "description": "Employee API"
+  },
+  "tags": [
+    {
+      "name": "Employee",
+      "description": "employee management"
+    }
+  ],
+  "paths": {
+    "/api/v1/employee": {
+      "get": {
+        "summary": "Get all employees",
+        "tags": ["Employee"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Employee"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Employee"],
+        "summary": "Create an employee",
+        "description": "to create a employee you will need to provide the title, description, priority, status of the employee",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "authorization token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmployeeInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Employee created successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Updating an employee",
+        "tags": ["Employee"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmployeeInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Employee Updated"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/v1/employee/{id}": {
+      "delete": {
+        "summary": "Delete an employee with the given id",
+        "tags": ["Employee"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the employee to delete"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Employee not found"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get one Employee",
+        "Tags": ["Employee"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the employee to get"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Employee": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "age": { "type": "integer" },
+          "notificationPreference": { "type": "array", "items": "string" }
+        }
+      },
+      "EmployeeInput": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "age": { "type": "integer" },
+          "notificationPreference": { "type": "array", "items": "string" }
+        },
+        "required": ["name", "age", "notificationPreference"]
+      }
+    }
+  }
+}

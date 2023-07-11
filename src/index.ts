@@ -1,5 +1,10 @@
 import express, { Request, Response, NextFunction } from "express";
+
 import mongoose from "mongoose";
+import * as swaggerDocument from "./swagger.json";
+
+// swagger
+import swaggerUi from "swagger-ui-express";
 
 import routes from "./routes/routes";
 
@@ -13,6 +18,7 @@ import EmployeeService from "./services/employee.service";
 // middlewares
 import { generateToken, isAuth } from "./middleware/isAuth.middleware";
 import { errorHandler } from "./middleware/error.middleware";
+import { EmployeeCache } from "./middleware/cache.middleware";
 
 const app = express();
 
@@ -26,11 +32,17 @@ app.use(express.json());
 // generate token middleware
 app.use("/api/v1/generate-token", generateToken);
 
+//documentation
+app.use("/api/v1/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 // authentication middleware
-app.use(isAuth);
+// app.use(isAuth);
 
 // employee routes
-app.use("/api/v1", routes(new EmployeeService(EmployeeModel)));
+app.use(
+  "/api/v1",
+  routes(new EmployeeService(EmployeeModel), new EmployeeCache())
+);
 
 // 404
 app.use((req: Request, res: Response, next: NextFunction) => {
@@ -42,14 +54,14 @@ app.use(errorHandler);
 
 const start = async () => {
   try {
-    if (db_url === "") throw "The database link is empty!";
+    if (db_url === "") throw new Error("The database link is empty!");
     await mongoose.connect(db_url);
+    app.listen(port, () => {
+      console.log(`Listening on port ${port}`);
+    });
   } catch (err) {
     console.log(err);
   }
-  app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
-  });
 };
 
 start();
