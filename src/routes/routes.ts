@@ -3,14 +3,21 @@ import EmployeeController from "../controllers/employeeController";
 import EmployeeService from "../services/employee.service";
 import { NotificationHandler } from "../notification/notificationHandler";
 import { uploadMiddleware } from "../middleware/upload.middleware";
-export default (_employeeService: EmployeeService) => {
-  const router = Router();
+import { EmployeeCache } from "../middleware/cache.middleware";
 
-  const employeeController = new EmployeeController(_employeeService);
+export default (
+  _employeeService: EmployeeService,
+  _employeeCache: EmployeeCache
+) => {
+  const router = Router();
+  const employeeController = new EmployeeController(
+    _employeeService,
+    _employeeCache
+  );
   employeeController.attach(new NotificationHandler());
 
   router.route("/employee").get(employeeController.getAllEmployees);
-  router.route("/employee/:id").get(employeeController.getOneEmployee);
+  router.get("/employee/:id", employeeController.getOneEmployee);
   router.post("/employee", employeeController.addEmployee);
   router.post(
     "/employee/bulk-upload",

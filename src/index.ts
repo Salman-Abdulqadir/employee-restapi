@@ -18,6 +18,7 @@ import EmployeeService from "./services/employee.service";
 // middlewares
 import { generateToken, isAuth } from "./middleware/isAuth.middleware";
 import { errorHandler } from "./middleware/error.middleware";
+import { EmployeeCache } from "./middleware/cache.middleware";
 
 const app = express();
 
@@ -38,7 +39,10 @@ app.use("/api/v1/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // app.use(isAuth);
 
 // employee routes
-app.use("/api/v1", routes(new EmployeeService(EmployeeModel)));
+app.use(
+  "/api/v1",
+  routes(new EmployeeService(EmployeeModel), new EmployeeCache())
+);
 
 // 404
 app.use((req: Request, res: Response, next: NextFunction) => {
