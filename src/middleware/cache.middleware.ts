@@ -1,8 +1,9 @@
 import * as redis from "redis";
 import { environment } from "../config";
 import { EmployeeI } from "../interfaces/employee.interface";
+import { EmployeeCacheI } from "../interfaces/employee.interface";
 
-export class EmployeeCache {
+export class EmployeeCache implements EmployeeCacheI {
   private static client: redis.RedisClientType;
   constructor() {
     if (!EmployeeCache.client) {

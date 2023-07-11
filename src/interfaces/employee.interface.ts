@@ -24,6 +24,12 @@ export interface EmployeeServiceI {
   update: (updatedEmployee: EmployeeI) => void;
   bulkInsert: (employees: EmployeeI[]) => void;
 }
+export interface EmployeeCacheI {
+  getEmployee: (employeeId: string) => Promise<EmployeeI | undefined>;
+  setEmployee: (
+    employee: EmployeeI
+  ) => Promise<{ status: boolean; content: string }>;
+}
 
 export interface SubjectI {
   attach: (observer: ObserverI) => void;
