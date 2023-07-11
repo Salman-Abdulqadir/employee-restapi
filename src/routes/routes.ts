@@ -10,6 +10,7 @@ export default (_employeeService: EmployeeService) => {
   employeeController.attach(new NotificationHandler());
 
   router.route("/employee").get(employeeController.getAllEmployees);
+  router.route("/employee/:id").get(employeeController.getOneEmployee);
   router.post("/employee", employeeController.addEmployee);
   router.post(
     "/employee/bulk-upload",

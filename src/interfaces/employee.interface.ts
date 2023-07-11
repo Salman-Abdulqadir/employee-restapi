@@ -19,6 +19,7 @@ export interface EmployeeServiceI {
   model: mongoose.Model<any, any>;
   post: (data: object) => any;
   get: () => Promise<object | undefined>;
+  getOne: (employeeId: string) => Promise<EmployeeI | undefined>;
   delete: (id: string) => void;
   update: (updatedEmployee: EmployeeI) => void;
   bulkInsert: (employees: EmployeeI[]) => void;

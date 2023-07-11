@@ -19,6 +19,9 @@ export default class EmployeeService implements EmployeeServiceI {
     const resource = await this.model.find();
     return resource;
   };
+  getOne = async (employeeId: string): Promise<EmployeeI | undefined> => {
+    return this.model.findById(employeeId);
+  };
   delete = (id: string): void => {
     return this.model.findOneAndDelete(new mongoose.Types.ObjectId(id));
   };

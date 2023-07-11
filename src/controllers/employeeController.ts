@@ -38,6 +38,18 @@ export default class EmployeeController implements SubjectI {
       next(err);
     }
   };
+  public getOneEmployee = async (req: Request, res: Response) => {
+    try {
+      const employeeId = req.params.id;
+      if (employeeId === "") throw new Error("Employee id is empty");
+      const employee = await this.employeeService.getOne(employeeId);
+      if (!employee)
+        throw new Error(`Employee with id - ${employeeId} not found`);
+      res.status(200).json(employee);
+    } catch (err: any) {
+      res.status(400).json({ message: err?.message });
+    }
+  };
   public addEmployee = async (
     req: Request,
     res: Response,
