@@ -21,6 +21,7 @@ const EmployeeSchema = new mongoose.Schema({
     required: true,
   },
 });
+git;
 
 export const EmployeeModel = mongoose.model<EmployeeSI>(
   "Employee",
