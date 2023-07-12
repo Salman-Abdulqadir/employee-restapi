@@ -90,7 +90,7 @@ const checkEmployee = (
   if (!validatedEmployee.status)
     return {
       isValid: false,
-      content: `${validatedEmployee.message}: Row ${rowCounter}`,
+      content: `Invalid data in row ${rowCounter}: ${validatedEmployee.message}`,
     };
 
   return { isValid: true, content: employee };

@@ -12,8 +12,11 @@ export default class EmployeeService implements EmployeeServiceI {
     this.model = model;
   }
   post = async (data: object) => {
-    const resource = await this.model.create(data);
-    return resource;
+    const employee: EmployeeI[] = await this.model.find(data);
+    if (employee.length == 0) {
+      const resource = await this.model.create(data);
+      return resource;
+    }
   };
   get = async (): Promise<object | undefined> => {
     const resource = await this.model.find();
@@ -27,16 +30,13 @@ export default class EmployeeService implements EmployeeServiceI {
   };
   update = async (updatedEmployee: EmployeeI) => {
     try {
-      const id = updatedEmployee.id;
-      const name = updatedEmployee.name;
-      const age = updatedEmployee.age;
-      await this.model.findByIdAndUpdate(id, { name, age });
+      await this.model.findByIdAndUpdate(updatedEmployee.id, updatedEmployee);
     } catch (err) {
       console.log(err);
     }
   };
   bulkInsert = async (employees: EmployeeI[]) => {
-    let filteredEmployees = await Promise.all(
+    let notExistingEmployees = await Promise.all(
       employees.map(async (employee) => {
         let status = await this.model.find(employee);
 
@@ -45,11 +45,10 @@ export default class EmployeeService implements EmployeeServiceI {
         }
       })
     );
-    filteredEmployees = filteredEmployees.filter(
+    notExistingEmployees = notExistingEmployees.filter(
       (employee) => employee !== undefined
     );
-    console.log(filteredEmployees);
-    this.model.insertMany(filteredEmployees);
-    return filteredEmployees;
+    this.model.insertMany(notExistingEmployees);
+    return notExistingEmployees;
   };
 }

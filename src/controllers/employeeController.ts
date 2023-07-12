@@ -79,8 +79,7 @@ export default class EmployeeController implements SubjectI {
 
       const validation = ValidateEmployee(employee);
 
-      if (!validation.status)
-        return res.status(400).json({ message: validation.message });
+      if (!validation.status) throw new Error(validation.message);
 
       this.employeeService.post(employee);
 
@@ -88,8 +87,8 @@ export default class EmployeeController implements SubjectI {
       this.notify(employee);
 
       res.status(201).json({ message: "Employee Added" });
-    } catch (err) {
-      next(err);
+    } catch (err: any) {
+      res.status(400).json({ message: err.message });
     }
   };
   public updateEmployee = async (
@@ -143,17 +142,21 @@ export default class EmployeeController implements SubjectI {
         return res.status(400).json({ message: employees.content });
 
       // if the employees are successfully processed, they will be inserted
-      const filteredEmployees = await this.employeeService.bulkInsert(
+      const insertedEmployees = await this.employeeService.bulkInsert(
         employees.content
       );
+      if (insertedEmployees.length < 1)
+        return res
+          .status(409)
+          .json({ message: "Employees already exist in the database" });
 
       // notify the observers that employees were created
-      this.notify(filteredEmployees);
+      this.notify(insertedEmployees);
 
-      res.status(201).json(filteredEmployees);
+      res.status(201).json({ insertedEmployees });
     } catch (error) {
       res
-        .status(400)
+        .status(500)
         .json({ message: "Error uploading and processing the file" });
     }
   };
