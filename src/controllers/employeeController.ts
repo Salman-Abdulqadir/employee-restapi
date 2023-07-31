@@ -5,16 +5,19 @@ import {
   ObserverI,
   SubjectI,
 } from "../interfaces/employee.interface";
-import { EmployeeCache } from "../middleware/cache.middleware";
+import { EmployeeCacheService } from "../services/employeeCache.service";
 import { ValidateEmployee } from "../middleware/validateEmployeeInfo";
 import { processCSV } from "../middleware/process-csv.middleware";
 
 export default class EmployeeController implements SubjectI {
   private employeeService: EmployeeService;
-  private employeeCache: EmployeeCache;
+  private employeeCache: EmployeeCacheService;
   private subscribers: ObserverI[] = [];
 
-  constructor(employeeService: EmployeeService, employeeCache: EmployeeCache) {
+  constructor(
+    employeeService: EmployeeService,
+    employeeCache: EmployeeCacheService
+  ) {
     this.employeeService = employeeService;
     this.employeeCache = employeeCache;
   }

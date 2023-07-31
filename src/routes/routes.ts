@@ -3,7 +3,7 @@ import EmployeeController from "../controllers/employeeController";
 import EmployeeService from "../services/employee.service";
 import { NotificationHandler } from "../notification/notificationHandler";
 import { uploadMiddleware } from "../middleware/upload.middleware";
-import { EmployeeCache } from "../middleware/cache.middleware";
+import { EmployeeCache } from "../services/employeeCache.service";
 
 export default (
   _employeeService: EmployeeService,

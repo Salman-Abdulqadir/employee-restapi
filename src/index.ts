@@ -18,7 +18,7 @@ import EmployeeService from "./services/employee.service";
 // middlewares
 import { generateToken, isAuth } from "./middleware/isAuth.middleware";
 import { errorHandler } from "./middleware/error.middleware";
-import { EmployeeCache } from "./middleware/cache.middleware";
+import { EmployeeCache } from "./services/employeeCache.service";
 
 const app = express();
 
