@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { EmployeeCacheService } from "../services/employeeCache.service";
 
 export interface EmployeeSI extends mongoose.Document {
   name: string;
@@ -17,6 +18,7 @@ export interface EmployeeI {
 
 export interface EmployeeServiceI {
   model: mongoose.Model<any, any>;
+  employeeCacheService: EmployeeCacheService;
   post: (data: object) => any;
   get: () => Promise<object | undefined>;
   getOne: (employeeId: string) => Promise<EmployeeI | undefined>;

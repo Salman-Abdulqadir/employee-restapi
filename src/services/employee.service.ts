@@ -4,13 +4,13 @@ import {
   EmployeeI,
 } from "../interfaces/employee.interface";
 import mongoose from "mongoose";
+import { EmployeeCacheService } from "./employeeCache.service";
 
 export default class EmployeeService implements EmployeeServiceI {
-  model: mongoose.Model<EmployeeSI, any>;
-
-  constructor(model: mongoose.Model<EmployeeSI, any>) {
-    this.model = model;
-  }
+  constructor(
+    public model: mongoose.Model<EmployeeSI, any>,
+    public employeeCacheService: EmployeeCacheService
+  ) {}
   post = async (data: object) => {
     const employee: EmployeeI[] = await this.model.find(data);
     if (employee.length == 0) {
@@ -23,23 +23,44 @@ export default class EmployeeService implements EmployeeServiceI {
     return resource;
   };
   getOne = async (employeeId: string): Promise<EmployeeI | undefined> => {
-    return this.model.findById(employeeId);
+    // checking if the employee is in the cache
+    let employee = await this.employeeCacheService.getEmployee(employeeId);
+    if (employee) {
+      console.log("From redis");
+      return employee;
+    }
+    employee = await this.model.findById(employeeId);
+    if (employee) {
+      console.log("from db");
+      await this.employeeCacheService.setEmployee(employee);
+      return employee;
+    }
+    throw new Error("Employee not found");
   };
   delete = (id: string): void => {
     return this.model.findOneAndDelete(new mongoose.Types.ObjectId(id));
   };
   update = async (updatedEmployee: EmployeeI) => {
-    try {
-      await this.model.findByIdAndUpdate(updatedEmployee.id, updatedEmployee);
-    } catch (err) {
-      console.log(err);
+    const employee = await this.model.findByIdAndUpdate(
+      updatedEmployee.id,
+      updatedEmployee
+    );
+    if (!employee) throw new Error("Employee not updated");
+
+    // check if the employee is in the cache memory
+    const cachedEmployee = await this.employeeCacheService.getEmployee(
+      updatedEmployee.id
+    );
+    if (cachedEmployee) {
+      console.log("Updating cached employee");
+      this.employeeCacheService.setEmployee(employee);
     }
+    return employee;
   };
   bulkInsert = async (employees: EmployeeI[]) => {
     let notExistingEmployees = await Promise.all(
       employees.map(async (employee) => {
         let status = await this.model.find(employee);
-
         if (status.length === 0) {
           return employee;
         }

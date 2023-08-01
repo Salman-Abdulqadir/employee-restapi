@@ -3,6 +3,8 @@ import express, { Request, Response, NextFunction } from "express";
 import mongoose from "mongoose";
 import * as swaggerDocument from "./swagger.json";
 
+// morgan
+import morgan from "morgan";
 // swagger
 import swaggerUi from "swagger-ui-express";
 
@@ -18,7 +20,7 @@ import EmployeeService from "./services/employee.service";
 // middlewares
 import { generateToken, isAuth } from "./middleware/isAuth.middleware";
 import { errorHandler } from "./middleware/error.middleware";
-import { EmployeeCache } from "./services/employeeCache.service";
+import { EmployeeCacheService } from "./services/employeeCache.service";
 
 const app = express();
 
@@ -28,6 +30,9 @@ const port = environment.PORT || 3000;
 
 // body parser
 app.use(express.json());
+
+// logger
+app.use(morgan("dev"));
 
 // generate token middleware
 app.use("/api/v1/generate-token", generateToken);
@@ -41,7 +46,7 @@ app.use("/api/v1/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // employee routes
 app.use(
   "/api/v1",
-  routes(new EmployeeService(EmployeeModel), new EmployeeCache())
+  routes(new EmployeeService(EmployeeModel, new EmployeeCacheService()))
 );
 
 // 404

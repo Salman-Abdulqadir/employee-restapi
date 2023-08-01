@@ -11,15 +11,10 @@ import { processCSV } from "../middleware/process-csv.middleware";
 
 export default class EmployeeController implements SubjectI {
   private employeeService: EmployeeService;
-  private employeeCache: EmployeeCacheService;
   private subscribers: ObserverI[] = [];
 
-  constructor(
-    employeeService: EmployeeService,
-    employeeCache: EmployeeCacheService
-  ) {
+  constructor(employeeService: EmployeeService) {
     this.employeeService = employeeService;
-    this.employeeCache = employeeCache;
   }
   public attach = (observer: ObserverI) => {
     if (!this.subscribers.includes(observer)) this.subscribers.push(observer);
@@ -49,18 +44,10 @@ export default class EmployeeController implements SubjectI {
       const employeeId = req.params.id;
       if (employeeId === "") throw new Error("Employee id is empty");
 
-      // checks in the cache first
-      let employee = await this.employeeCache.getEmployee(employeeId);
-      console.log(employee);
-      // if the employee is not in the cache it will bring it from the db
-      // and save it in the cache
-      if (!employee) {
-        employee = await this.employeeService.getOne(employeeId);
-        console.log("from db");
-        if (!employee)
-          throw new Error(`Employee with id - ${employeeId} not found`);
-        await this.employeeCache.setEmployee(employee);
-      }
+      const employee = await this.employeeService.getOne(employeeId);
+
+      if (!employee)
+        throw new Error(`Employee with id - ${employeeId} not found`);
 
       res.status(200).json(employee);
     } catch (err: any) {
